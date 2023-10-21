@@ -1,0 +1,37 @@
+go2rtc:
+  streams:
+    tuin: 
+      - "ffmpeg:http://IP-CAMERA1/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=USERNAME&password=PASSWOORD#video=copy#audio=copy#audio=opus" # <----- Add high res stream
+    tuin_sub: 
+      - "ffmpeg:http://IP-CAMERA1/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=USERNAME&password=PASSWOORD"
+    koertje: 
+      - "ffmpeg:http://IP-CAMERA2/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=USERNAME&password=PASSWOORD#video=copy#audio=copy#audio=opus" # <----- Add high res stream
+    koertje_sub: 
+      - "ffmpeg:http://IP-CAMERA2/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=USERNAME&password=PASSWOORD"
+
+cameras:
+  tuin: # <------ Name the camera
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/tuin_sub?video=copy # <----- Update for your camera
+          roles:
+            - detect
+            - rtmp
+        - path: rtsp://127.0.0.1:8554/tuin?video=copy&audio=aac # <----- Add high res stream
+          roles:
+            - record
+
+
+
+
+
+  koertje: # <------ Name the camera
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/koertje_sub?video=copy # <----- Update for your camera
+          roles:
+            - detect
+            - rtmp
+        - path: rtsp://127.0.0.1:8554/koertje?video=copy&audio=aac # <----- Add high res stream
+          roles:
+            - record
